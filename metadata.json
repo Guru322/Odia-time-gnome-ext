@@ -1,0 +1,6 @@
+{
+  "name": "Odia Time",
+  "description": "Displays time and date in Odia",
+  "shell-version": ["42"],
+  "uuid": "odia-time@gurucharan.me"
+}
