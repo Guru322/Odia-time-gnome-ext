@@ -1,13 +1,13 @@
 const Main = imports.ui.main;
 const St = imports.gi.St;
 const GLib = imports.gi.GLib;
+const Clutter = imports.gi.Clutter;
 
-let originalClock;    
-let customClock;     
-let clockUpdateId;    
+let originalClock;
+let customClock;
+let clockUpdateId;
 
-function init() {
-}
+function init() {}
 
 function enable() {
     originalClock = Main.panel.statusArea.dateMenu.actor;
@@ -15,7 +15,9 @@ function enable() {
 
     customClock = new St.Label({
         text: "",
-        style_class: "panel-clock" 
+        style_class: "panel-clock",
+        y_align: Clutter.ActorAlign.CENTER,
+        x_align: Clutter.ActorAlign.CENTER,
     });
 
     Main.panel._centerBox.insert_child_at_index(customClock, 0);
@@ -46,14 +48,13 @@ function disable() {
 
 function updateClock() {
     let now = GLib.DateTime.new_now_local();
-
     let hour = now.get_hour();
     let minute = now.get_minute();
     let odiaTime = toOdiaDigits(`${hour}:${minute}`);
 
-    let weekdayIndex = now.get_day_of_week(); 
-    let monthIndex = now.get_month() - 1;     
-    let day = now.get_day_of_month();         
+    let weekdayIndex = now.get_day_of_week();
+    let monthIndex = now.get_month() - 1;
+    let day = now.get_day_of_month();
     let odiaDay = toOdiaDigits(day.toString());
 
     let odiaWeekdays = ["ରବି", "ସୋମ", "ମଙ୍ଗଳ", "ବୁଧ", "ଗୁରୁ", "ଶୁକ୍ର", "ଶନି"];
@@ -62,14 +63,14 @@ function updateClock() {
     let odiaWeekday = odiaWeekdays[weekdayIndex - 1];
     let odiaMonth = odiaMonths[monthIndex];
 
-    let formattedDate = `${odiaWeekday}, ${odiaDay} ${odiaMonth}`;
-    let finalText = `${odiaTime} • ${formattedDate}`;
+    let formattedDate = `${odiaWeekday}\u2009${odiaDay} ${odiaMonth}`;
+    let finalText = `${odiaTime}\u2009•\u2009${formattedDate}`;
 
     customClock.set_text(finalText);
 }
-
 
 function toOdiaDigits(str) {
     let odiaDigits = ["୦", "୧", "୨", "୩", "୪", "୫", "୬", "୭", "୮", "୯"];
     return str.replace(/\d/g, d => odiaDigits[parseInt(d)]);
 }
+
