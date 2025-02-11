@@ -22,7 +22,13 @@ function enable() {
     });
 
     customClock.connect("button-press-event", () => {
-        Main.panel.statusArea.dateMenu.menu.toggle();
+        let calendarMenu = Main.panel.statusArea.dateMenu.menu;
+        if (!calendarMenu.is_open) {
+            calendarMenu.open();
+            centerCalendarPopup();
+        } else {
+            calendarMenu.close();
+        }
     });
 
     Main.panel._centerBox.insert_child_at_index(customClock, 0);
@@ -78,3 +84,18 @@ function toOdiaDigits(str) {
     let odiaDigits = ["୦", "୧", "୨", "୩", "୪", "୫", "୬", "୭", "୮", "୯"];
     return str.replace(/\d/g, d => odiaDigits[parseInt(d)]);
 }
+
+function centerCalendarPopup() {
+    let calendarMenu = Main.panel.statusArea.dateMenu.menu;
+    let [panelX, panelY] = Main.panel.get_transformed_position();
+    let panelWidth = Main.panel.width;
+
+    let menuWidth = calendarMenu.actor.get_width();
+    let menuHeight = calendarMenu.actor.get_height();
+
+    let centerX = panelX + (panelWidth / 2) - (menuWidth / 2);
+    let positionY = panelY + Main.panel.height;
+
+    calendarMenu.actor.set_position(centerX, positionY);
+}
+
