@@ -18,6 +18,11 @@ function enable() {
         style_class: "panel-clock",
         y_align: Clutter.ActorAlign.CENTER,
         x_align: Clutter.ActorAlign.CENTER,
+        reactive: true,
+    });
+
+    customClock.connect("button-press-event", () => {
+        Main.panel.statusArea.dateMenu.menu.toggle();
     });
 
     Main.panel._centerBox.insert_child_at_index(customClock, 0);
@@ -73,4 +78,3 @@ function toOdiaDigits(str) {
     let odiaDigits = ["୦", "୧", "୨", "୩", "୪", "୫", "୬", "୭", "୮", "୯"];
     return str.replace(/\d/g, d => odiaDigits[parseInt(d)]);
 }
-
