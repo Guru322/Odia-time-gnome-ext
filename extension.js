@@ -51,9 +51,9 @@ function updateClock() {
     let minute = now.get_minute();
     let odiaTime = toOdiaDigits(`${hour}:${minute}`);
 
-    let weekdayIndex = now.get_day_of_week();  
+    let weekdayIndex = now.get_day_of_week(); 
     let monthIndex = now.get_month() - 1;     
-    let day = now.get_day();
+    let day = now.get_day_of_month();         
     let odiaDay = toOdiaDigits(day.toString());
 
     let odiaWeekdays = ["ରବି", "ସୋମ", "ମଙ୍ଗଳ", "ବୁଧ", "ଗୁରୁ", "ଶୁକ୍ର", "ଶନି"];
@@ -67,6 +67,7 @@ function updateClock() {
 
     customClock.set_text(finalText);
 }
+
 
 function toOdiaDigits(str) {
     let odiaDigits = ["୦", "୧", "୨", "୩", "୪", "୫", "୬", "୭", "୮", "୯"];
